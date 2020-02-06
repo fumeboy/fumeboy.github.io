@@ -1,0 +1,214 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"ComputerOrganization/Chapter2/1": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push(["./src/pages/ComputerOrganization/Chapter2/1.page.ts","vendors","common"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/pages/ComputerOrganization/Chapter2/1.page.ts":
+/*!***********************************************************!*\
+  !*** ./src/pages/ComputerOrganization/Chapter2/1.page.ts ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _templateObject = _taggedTemplateLiteral(['', '\u4F7F\u5B66\u751F\u638C\u63E1\u8BA1\u7B97\u673A\u5185\u90E8\u5404\u79CD\u6570\u636E\u7684\u673A\u5668\u7EA7\u8868\u793A\u4EE5\u53CA\u76F8\u5E94\u7684\u5404\u79CD\u8FD0\u7B97\u65B9\u6CD5\uFF0C\u5E76\u80FD\u5C06\u8FD9\u4E9B\u77E5\u8BC6\u719F\u7EC3\u8FD0\u7528\u5230\u9AD8\u7EA7\u8BED\u8A00\u548C\u673A\u5668\u7EA7\u8BED\u8A00\u7684\u7F16\u7A0B\u548C\u8C03\u8BD5\u5DE5\u4F5C\u4E2D\u3002'], ['', '\u4F7F\u5B66\u751F\u638C\u63E1\u8BA1\u7B97\u673A\u5185\u90E8\u5404\u79CD\u6570\u636E\u7684\u673A\u5668\u7EA7\u8868\u793A\u4EE5\u53CA\u76F8\u5E94\u7684\u5404\u79CD\u8FD0\u7B97\u65B9\u6CD5\uFF0C\u5E76\u80FD\u5C06\u8FD9\u4E9B\u77E5\u8BC6\u719F\u7EC3\u8FD0\u7528\u5230\u9AD8\u7EA7\u8BED\u8A00\u548C\u673A\u5668\u7EA7\u8BED\u8A00\u7684\u7F16\u7A0B\u548C\u8C03\u8BD5\u5DE5\u4F5C\u4E2D\u3002']),
+    _templateObject2 = _taggedTemplateLiteral(['\u4E3B\u8981\u6559\u5B66\u76EE\u6807'], ['\u4E3B\u8981\u6559\u5B66\u76EE\u6807']),
+    _templateObject3 = _taggedTemplateLiteral(['', ''], ['', '']),
+    _templateObject4 = _taggedTemplateLiteral(['\u57FA\u672C\u5B66\u4E60\u8981\u6C42'], ['\u57FA\u672C\u5B66\u4E60\u8981\u6C42']),
+    _templateObject5 = _taggedTemplateLiteral(['\u4E86\u89E3\u771F\u503C\u548C\u673A\u5668\u6570\u7684\u542B\u4E49\u3002'], ['\u4E86\u89E3\u771F\u503C\u548C\u673A\u5668\u6570\u7684\u542B\u4E49\u3002']),
+    _templateObject6 = _taggedTemplateLiteral(['\u4E86\u89E3\u65E0\u7B26\u53F7\u6574\u6570\u7684\u542B\u4E49\u3001\u7528\u9014\u548C\u8868\u793A\u3002'], ['\u4E86\u89E3\u65E0\u7B26\u53F7\u6574\u6570\u7684\u542B\u4E49\u3001\u7528\u9014\u548C\u8868\u793A\u3002']),
+    _templateObject7 = _taggedTemplateLiteral(['\u4E86\u89E3\u5E26\u7B26\u53F7\u6574\u6570\u7684\u8868\u793A\u65B9\u6CD5\u3002'], ['\u4E86\u89E3\u5E26\u7B26\u53F7\u6574\u6570\u7684\u8868\u793A\u65B9\u6CD5\u3002']),
+    _templateObject8 = _taggedTemplateLiteral(['\u7406\u89E3\u4E3A\u4EC0\u4E48\u73B0\u4EE3\u8BA1\u7B97\u673A\u90FD\u7528\u8865\u7801\u8868\u793A\u5E26\u7B26\u53F7\u6574\u6570\u3002'], ['\u7406\u89E3\u4E3A\u4EC0\u4E48\u73B0\u4EE3\u8BA1\u7B97\u673A\u90FD\u7528\u8865\u7801\u8868\u793A\u5E26\u7B26\u53F7\u6574\u6570\u3002']),
+    _templateObject9 = _taggedTemplateLiteral(['\u638C\u63E1\u5728\u771F\u503C\u548C\u5404\u79CD\u7F16\u7801\u8868\u793A\u6570\u4E4B\u95F4\u8FDB\u884C\u8F6C\u6362\u7684\u65B9\u6CD5\u3002'], ['\u638C\u63E1\u5728\u771F\u503C\u548C\u5404\u79CD\u7F16\u7801\u8868\u793A\u6570\u4E4B\u95F4\u8FDB\u884C\u8F6C\u6362\u7684\u65B9\u6CD5\u3002']),
+    _templateObject10 = _taggedTemplateLiteral(['\u80FD\u591F\u8FD0\u7528\u6574\u6570\u8868\u793A\u77E5\u8BC6\u89E3\u91CA\u548C\u89E3\u51B3\u9AD8\u7EA7\u7F16\u7A0B\u4E2D\u6574\u6570\u8868\u793A\u548C\u8F6C\u6362\u95EE\u9898\u3002'], ['\u80FD\u591F\u8FD0\u7528\u6574\u6570\u8868\u793A\u77E5\u8BC6\u89E3\u91CA\u548C\u89E3\u51B3\u9AD8\u7EA7\u7F16\u7A0B\u4E2D\u6574\u6570\u8868\u793A\u548C\u8F6C\u6362\u95EE\u9898\u3002']),
+    _templateObject11 = _taggedTemplateLiteral(['\u4E86\u89E3\u6D6E\u70B9\u6570\u8868\u793A\u683C\u5F0F\uFF0C\u4EE5\u53CA\u5176\u4E0E\u8868\u793A\u7CBE\u5EA6\u548C\u8868\u793A\u8303\u56F4\u4E4B\u95F4\u7684\u5173\u7CFB\u3002'], ['\u4E86\u89E3\u6D6E\u70B9\u6570\u8868\u793A\u683C\u5F0F\uFF0C\u4EE5\u53CA\u5176\u4E0E\u8868\u793A\u7CBE\u5EA6\u548C\u8868\u793A\u8303\u56F4\u4E4B\u95F4\u7684\u5173\u7CFB\u3002']),
+    _templateObject12 = _taggedTemplateLiteral(['\u638C\u63E1\u89C4\u683C\u5316\u6D6E\u70B9\u6570\u7684\u6982\u5FF5\u548C\u6D6E\u70B9\u6570\u89C4\u683C\u5316\u65B9\u6CD5\u3002'], ['\u638C\u63E1\u89C4\u683C\u5316\u6D6E\u70B9\u6570\u7684\u6982\u5FF5\u548C\u6D6E\u70B9\u6570\u89C4\u683C\u5316\u65B9\u6CD5\u3002']),
+    _templateObject13 = _taggedTemplateLiteral(['\u638C\u63E1 IEEE 754 \u6807\u51C6\uFF0C\u5E76\u80FD\u5728\u771F\u503C\u4E0E\u5355\u7CBE\u5EA6\u683C\u5F0F\u6D6E\u70B9\u6570\u4E4B\u95F4\u8FDB\u884C\u8F6C\u6362\u3002'], ['\u638C\u63E1 IEEE 754 \u6807\u51C6\uFF0C\u5E76\u80FD\u5728\u771F\u503C\u4E0E\u5355\u7CBE\u5EA6\u683C\u5F0F\u6D6E\u70B9\u6570\u4E4B\u95F4\u8FDB\u884C\u8F6C\u6362\u3002']),
+    _templateObject14 = _taggedTemplateLiteral(['\u80FD\u8FD0\u7528\u6570\u636E\u8868\u793A\u77E5\u8BC6\u89E3\u91CA\u548C\u89E3\u51B3\u9AD8\u7EA7\u8BED\u8A00\u7F16\u7A0B\u4E2D\u6D6E\u70B9\u6570\u8868\u793A\u548C\u8F6C\u6362\u95EE\u9898\u3002'], ['\u80FD\u8FD0\u7528\u6570\u636E\u8868\u793A\u77E5\u8BC6\u89E3\u91CA\u548C\u89E3\u51B3\u9AD8\u7EA7\u8BED\u8A00\u7F16\u7A0B\u4E2D\u6D6E\u70B9\u6570\u8868\u793A\u548C\u8F6C\u6362\u95EE\u9898\u3002']),
+    _templateObject15 = _taggedTemplateLiteral(['\u638C\u63E1\u5E38\u7528\u7684\u5341\u8FDB\u5236\u6570\u7684\u4E8C\u8FDB\u5236\u7F16\u7801\u65B9\u6CD5\uFF0C\u5982 8421 \u7801\u3002'], ['\u638C\u63E1\u5E38\u7528\u7684\u5341\u8FDB\u5236\u6570\u7684\u4E8C\u8FDB\u5236\u7F16\u7801\u65B9\u6CD5\uFF0C\u5982 8421 \u7801\u3002']),
+    _templateObject16 = _taggedTemplateLiteral(['\u4E86\u89E3\u903B\u8F91\u6570\u636E\u3001\u897F\u6587\u5B57\u7B26\u548C\u6C49\u5B57\u5B57\u7B26\u7684\u5E38\u7528\u8868\u793A\u65B9\u6CD5\uFF0C\u5982 ASCII \u7801\u3001GB 2312\u20141980\u3002'], ['\u4E86\u89E3\u903B\u8F91\u6570\u636E\u3001\u897F\u6587\u5B57\u7B26\u548C\u6C49\u5B57\u5B57\u7B26\u7684\u5E38\u7528\u8868\u793A\u65B9\u6CD5\uFF0C\u5982 ASCII \u7801\u3001GB 2312\u20141980\u3002']),
+    _templateObject17 = _taggedTemplateLiteral(['\u4E86\u89E3\u5E38\u7528\u6570\u636E\u957F\u5EA6\u5355\u4F4D\u7684\u542B\u4E49\uFF0C\u5982 bit\u3001Byte\u3001KB\u3001MB\u3001GB\u3001TB \u7B49\u3002'], ['\u4E86\u89E3\u5E38\u7528\u6570\u636E\u957F\u5EA6\u5355\u4F4D\u7684\u542B\u4E49\uFF0C\u5982 bit\u3001Byte\u3001KB\u3001MB\u3001GB\u3001TB \u7B49\u3002']),
+    _templateObject18 = _taggedTemplateLiteral(['\u4E86\u89E3\u5927\u7AEF\u548C\u5C0F\u7AEF\u6392\u5217\u65B9\u5F0F\uFF0C\u4EE5\u53CA\u6570\u636E\u7684\u5BF9\u9F50\u5B58\u50A8\u65B9\u5F0F\u3002'], ['\u4E86\u89E3\u5927\u7AEF\u548C\u5C0F\u7AEF\u6392\u5217\u65B9\u5F0F\uFF0C\u4EE5\u53CA\u6570\u636E\u7684\u5BF9\u9F50\u5B58\u50A8\u65B9\u5F0F\u3002']),
+    _templateObject19 = _taggedTemplateLiteral(['\u4E86\u89E3\u9AD8\u7EA7\u7A0B\u5E8F\u8BBE\u8BA1\u8BED\u8A00\u548C\u4F4E\u7EA7\u7A0B\u5E8F\u8BBE\u8BA1\u8BED\u8A00\u4E2D\u6D89\u53CA\u7684\u5404\u79CD\u8FD0\u7B97\u3002'], ['\u4E86\u89E3\u9AD8\u7EA7\u7A0B\u5E8F\u8BBE\u8BA1\u8BED\u8A00\u548C\u4F4E\u7EA7\u7A0B\u5E8F\u8BBE\u8BA1\u8BED\u8A00\u4E2D\u6D89\u53CA\u7684\u5404\u79CD\u8FD0\u7B97\u3002']),
+    _templateObject20 = _taggedTemplateLiteral(['\u638C\u63E1\u5B9A\u70B9\u6570\u7684\u903B\u8F91\u79FB\u4F4D\u3001\u7B97\u672F\u79FB\u4F4D\u548C\u6269\u5C55\u64CD\u4F5C\u65B9\u6CD5\u3002'], ['\u638C\u63E1\u5B9A\u70B9\u6570\u7684\u903B\u8F91\u79FB\u4F4D\u3001\u7B97\u672F\u79FB\u4F4D\u548C\u6269\u5C55\u64CD\u4F5C\u65B9\u6CD5\u3002']),
+    _templateObject21 = _taggedTemplateLiteral(['\u638C\u63E1\u6574\u6570\u52A0\u51CF\u8FD0\u7B97\u65B9\u6CD5\u4EE5\u53CA\u8FD0\u7B97\u90E8\u4EF6\u7684\u7ED3\u6784\uFF0C\u5E76\u80FD\u5229\u7528\u673A\u5668\u5185\u90E8\u7684\u6574\u6570\u8FD0\u7B97\u77E5\u8BC6\u89E3\u91CA\u9AD8\u7EA7\u8BED\u8A00\u7F16\u7A0B\u4E2D\u76F8\u5E94\u7684\u8BA1\u7B97\u7ED3\u679C\u3002'], ['\u638C\u63E1\u6574\u6570\u52A0\u51CF\u8FD0\u7B97\u65B9\u6CD5\u4EE5\u53CA\u8FD0\u7B97\u90E8\u4EF6\u7684\u7ED3\u6784\uFF0C\u5E76\u80FD\u5229\u7528\u673A\u5668\u5185\u90E8\u7684\u6574\u6570\u8FD0\u7B97\u77E5\u8BC6\u89E3\u91CA\u9AD8\u7EA7\u8BED\u8A00\u7F16\u7A0B\u4E2D\u76F8\u5E94\u7684\u8BA1\u7B97\u7ED3\u679C\u3002']),
+    _templateObject22 = _taggedTemplateLiteral(['\u7406\u89E3\u4E3A\u4F55\u5728\u8FD0\u7B97\u4E2D\u4F1A\u53D1\u751F\u6EA2\u51FA\uFF0C\u5E76\u638C\u63E1\u5224\u65AD\u6574\u6570\u52A0\u51CF\u8FD0\u7B97\u6EA2\u51FA\u7684\u65B9\u6CD5\u3002'], ['\u7406\u89E3\u4E3A\u4F55\u5728\u8FD0\u7B97\u4E2D\u4F1A\u53D1\u751F\u6EA2\u51FA\uFF0C\u5E76\u638C\u63E1\u5224\u65AD\u6574\u6570\u52A0\u51CF\u8FD0\u7B97\u6EA2\u51FA\u7684\u65B9\u6CD5\u3002']),
+    _templateObject23 = _taggedTemplateLiteral(['\u7406\u89E3\u673A\u5668\u5185\u90E8\u6574\u6570\u4E58\u8FD0\u7B97\u7684\u57FA\u672C\u65B9\u6CD5\u4EE5\u53CA\u5E26\u7B26\u53F7\u6574\u6570\u4E58\u548C\u65E0\u7B26\u53F7\u6574\u6570\u4E58\u7684\u4E58\u79EF\u4E4B\u95F4\u7684\u5173\u7CFB\u3002'], ['\u7406\u89E3\u673A\u5668\u5185\u90E8\u6574\u6570\u4E58\u8FD0\u7B97\u7684\u57FA\u672C\u65B9\u6CD5\u4EE5\u53CA\u5E26\u7B26\u53F7\u6574\u6570\u4E58\u548C\u65E0\u7B26\u53F7\u6574\u6570\u4E58\u7684\u4E58\u79EF\u4E4B\u95F4\u7684\u5173\u7CFB\u3002']),
+    _templateObject24 = _taggedTemplateLiteral(['\u7406\u89E3\u4E3A\u4EC0\u4E48\u6574\u6570\u4E58\u8FD0\u7B97\u4F1A\u53D1\u751F\u6EA2\u51FA\uFF0C\u5E76\u80FD\u591F\u8BF4\u660E\u5728\u9AD8\u7EA7\u8BED\u8A00\u548C\u673A\u5668\u7EA7\u4EE3\u7801\u4E24\u4E2A\u4E0D\u540C\u7684\u5C42\u9762\u5982\u4F55\u8FDB\u884C\u6EA2\u51FA\u5224\u65AD\u3002'], ['\u7406\u89E3\u4E3A\u4EC0\u4E48\u6574\u6570\u4E58\u8FD0\u7B97\u4F1A\u53D1\u751F\u6EA2\u51FA\uFF0C\u5E76\u80FD\u591F\u8BF4\u660E\u5728\u9AD8\u7EA7\u8BED\u8A00\u548C\u673A\u5668\u7EA7\u4EE3\u7801\u4E24\u4E2A\u4E0D\u540C\u7684\u5C42\u9762\u5982\u4F55\u8FDB\u884C\u6EA2\u51FA\u5224\u65AD\u3002']),
+    _templateObject25 = _taggedTemplateLiteral(['\u7406\u89E3\u6574\u6570\u9664\u8FD0\u7B97\u5728\u4EC0\u4E48\u60C5\u51B5\u4E0B\u53D1\u751F\u6EA2\u51FA\u4EE5\u53CA\u4E3A\u4F55\u5728\u5176\u4ED6\u60C5\u51B5\u4E0B\u4E0D\u4F1A\u53D1\u751F\u6EA2\u51FA\u3002'], ['\u7406\u89E3\u6574\u6570\u9664\u8FD0\u7B97\u5728\u4EC0\u4E48\u60C5\u51B5\u4E0B\u53D1\u751F\u6EA2\u51FA\u4EE5\u53CA\u4E3A\u4F55\u5728\u5176\u4ED6\u60C5\u51B5\u4E0B\u4E0D\u4F1A\u53D1\u751F\u6EA2\u51FA\u3002']),
+    _templateObject26 = _taggedTemplateLiteral(['\u7406\u89E3\u5728\u4E00\u4E2A\u53D8\u91CF\u4E0E\u4E00\u4E2A\u5E38\u91CF\u76F8\u4E58\u65F6\u5982\u4F55\u5C06\u4E58\u8FD0\u7B97\u8F6C\u6362\u4E3A\u52A0\u51CF\u548C\u79FB\u4F4D\u8FD0\u7B97\u3002'], ['\u7406\u89E3\u5728\u4E00\u4E2A\u53D8\u91CF\u4E0E\u4E00\u4E2A\u5E38\u91CF\u76F8\u4E58\u65F6\u5982\u4F55\u5C06\u4E58\u8FD0\u7B97\u8F6C\u6362\u4E3A\u52A0\u51CF\u548C\u79FB\u4F4D\u8FD0\u7B97\u3002']),
+    _templateObject27 = _taggedTemplateLiteral(['\u7406\u89E3\u4E00\u4E2A\u53D8\u91CF\u9664\u4EE5\u4E00\u4E2A 2 \u7684\u5E42\u6B21\u5F62\u5F0F\u7684\u6574\u6570\u65F6\u5982\u4F55\u7528\u52A0\u51CF\u548C\u79FB\u4F4D\u8FD0\u7B97\u5B9E\u73B0\u3002'], ['\u7406\u89E3\u4E00\u4E2A\u53D8\u91CF\u9664\u4EE5\u4E00\u4E2A 2 \u7684\u5E42\u6B21\u5F62\u5F0F\u7684\u6574\u6570\u65F6\u5982\u4F55\u7528\u52A0\u51CF\u548C\u79FB\u4F4D\u8FD0\u7B97\u5B9E\u73B0\u3002']),
+    _templateObject28 = _taggedTemplateLiteral(['\u638C\u63E1\u6D6E\u70B9\u6570\u52A0\u51CF\u8FD0\u7B97\u8FC7\u7A0B\u548C\u65B9\u6CD5\u3002'], ['\u638C\u63E1\u6D6E\u70B9\u6570\u52A0\u51CF\u8FD0\u7B97\u8FC7\u7A0B\u548C\u65B9\u6CD5\u3002']),
+    _templateObject29 = _taggedTemplateLiteral(['\u7406\u89E3 IEEE 754 \u6807\u51C6\u5BF9\u9644\u52A0\u4F4D\u7684\u6DFB\u52A0\u4EE5\u53CA\u820D\u5165\u6A21\u5F0F\u7B49\u65B9\u9762\u7684\u89C4\u5B9A\u3002'], ['\u7406\u89E3 IEEE 754 \u6807\u51C6\u5BF9\u9644\u52A0\u4F4D\u7684\u6DFB\u52A0\u4EE5\u53CA\u820D\u5165\u6A21\u5F0F\u7B49\u65B9\u9762\u7684\u89C4\u5B9A\u3002']),
+    _templateObject30 = _taggedTemplateLiteral(['\u4E86\u89E3\u6D6E\u70B9\u6570\u4E58\u6CD5\u548C\u9664\u6CD5\u8FD0\u7B97\u7684\u57FA\u672C\u601D\u60F3\u3002'], ['\u4E86\u89E3\u6D6E\u70B9\u6570\u4E58\u6CD5\u548C\u9664\u6CD5\u8FD0\u7B97\u7684\u57FA\u672C\u601D\u60F3\u3002']),
+    _templateObject31 = _taggedTemplateLiteral(['\u672C\u7AE0\u5185\u5BB9\u76F8\u5BF9\u6BD4\u8F83\u5BB9\u6613\uFF0C\u5B66\u751F\u4E5F\u6BD4\u8F83\u719F\u6089\u3002\u5BF9\u4E8E\u4FE1\u606F\u7684\u4E8C\u8FDB\u5236\u8868\u793A\u3001\u8FDB\u4F4D\u8BA1\u6570\u5236\u7B49\u7B80\u5355\u5185\u5BB9\uFF0C\u5B8C\u5168\u53EF\u4EE5\u8BA9\u5B66\u751F\u81EA\u5B66\u3002\u5982\u679C\u8BFE\u65F6\u4E0D\u5145\u88D5\uFF0C\u5BF9\u4E8E\u5341\u8FDB\u5236\u6570\u7684\u8868\u793A\u548C\u6C49\u5B57\u5B57\u7B26\u7F16\u7801\u90E8\u5206\uFF0C\u4E5F\u53EF\u4EE5\u53EA\u7B80\u5355\u4ECB\u7ECD\u5176\u6982\u8981\u5185\u5BB9\uFF0C\u7EC6\u8282\u90E8\u5206\u7559\u7ED9\u5B66\u751F\u8BFE\u540E\u9605\u8BFB\u3002\u5173\u4E8E\u9AD8\u7EA7\u8BED\u8A00\u4E2D\u7684\u5404\u79CD\u6570\u636E\u7C7B\u578B\u4E0E\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u4E4B\u95F4\u7684\u5173\u7CFB\uFF0C\u5E94\u8BE5\u8981\u6C42\u5B66\u751F\u638C\u63E1\uFF0C\u8FD9\u5BF9\u4E8E\u63D0\u9AD8\u5B66\u751F\u7A0B\u5E8F\u8BBE\u8BA1\u548C\u8C03\u8BD5\u80FD\u529B\u53EF\u8D77\u5230\u5F88\u5927\u7684\u4F5C\u7528\u3002\u5176\u5B9E\uFF0C\u8FD9\u90E8\u5206\u5185\u5BB9\u5F88\u7B80\u5355\uFF0C\u53EA\u8981\u5728\u6559\u5B66\u8FC7\u7A0B\u4E2D\u63D0\u9192\u5B66\u751F\u5173\u6CE8\u5E76\u8FDB\u884C\u4E00\u4E9B\u7F16\u7A0B\u7EC3\u4E60\u5C31\u80FD\u8FBE\u5230\u76EE\u7684\uFF0C\u800C\u4E14\u7A0B\u5E8F\u8BBE\u8BA1\u8BFE\u7A0B\u4E2D\u5927\u591A\u4E5F\u4F1A\u4ECB\u7ECD\u8FD9\u90E8\u5206\u5185\u5BB9\u3002'], ['\u672C\u7AE0\u5185\u5BB9\u76F8\u5BF9\u6BD4\u8F83\u5BB9\u6613\uFF0C\u5B66\u751F\u4E5F\u6BD4\u8F83\u719F\u6089\u3002\u5BF9\u4E8E\u4FE1\u606F\u7684\u4E8C\u8FDB\u5236\u8868\u793A\u3001\u8FDB\u4F4D\u8BA1\u6570\u5236\u7B49\u7B80\u5355\u5185\u5BB9\uFF0C\u5B8C\u5168\u53EF\u4EE5\u8BA9\u5B66\u751F\u81EA\u5B66\u3002\u5982\u679C\u8BFE\u65F6\u4E0D\u5145\u88D5\uFF0C\u5BF9\u4E8E\u5341\u8FDB\u5236\u6570\u7684\u8868\u793A\u548C\u6C49\u5B57\u5B57\u7B26\u7F16\u7801\u90E8\u5206\uFF0C\u4E5F\u53EF\u4EE5\u53EA\u7B80\u5355\u4ECB\u7ECD\u5176\u6982\u8981\u5185\u5BB9\uFF0C\u7EC6\u8282\u90E8\u5206\u7559\u7ED9\u5B66\u751F\u8BFE\u540E\u9605\u8BFB\u3002\u5173\u4E8E\u9AD8\u7EA7\u8BED\u8A00\u4E2D\u7684\u5404\u79CD\u6570\u636E\u7C7B\u578B\u4E0E\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u4E4B\u95F4\u7684\u5173\u7CFB\uFF0C\u5E94\u8BE5\u8981\u6C42\u5B66\u751F\u638C\u63E1\uFF0C\u8FD9\u5BF9\u4E8E\u63D0\u9AD8\u5B66\u751F\u7A0B\u5E8F\u8BBE\u8BA1\u548C\u8C03\u8BD5\u80FD\u529B\u53EF\u8D77\u5230\u5F88\u5927\u7684\u4F5C\u7528\u3002\u5176\u5B9E\uFF0C\u8FD9\u90E8\u5206\u5185\u5BB9\u5F88\u7B80\u5355\uFF0C\u53EA\u8981\u5728\u6559\u5B66\u8FC7\u7A0B\u4E2D\u63D0\u9192\u5B66\u751F\u5173\u6CE8\u5E76\u8FDB\u884C\u4E00\u4E9B\u7F16\u7A0B\u7EC3\u4E60\u5C31\u80FD\u8FBE\u5230\u76EE\u7684\uFF0C\u800C\u4E14\u7A0B\u5E8F\u8BBE\u8BA1\u8BFE\u7A0B\u4E2D\u5927\u591A\u4E5F\u4F1A\u4ECB\u7ECD\u8FD9\u90E8\u5206\u5185\u5BB9\u3002']),
+    _templateObject32 = _taggedTemplateLiteral(['\u5BF9\u4E8E\u672C\u7AE0\u5185\u5BB9\uFF0C\u6559\u5B66\u8FC7\u7A0B\u4E2D\u666E\u904D\u5B58\u5728\u7684\u95EE\u9898\u662F\uFF0C\u5B66\u751F\u7F3A\u4E4F\u5C06\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u548C\u7A0B\u5E8F\u8BBE\u8BA1\u53CA\u7A0B\u5E8F\u8C03\u8BD5\u5DE5\u4F5C\u76F8\u4E92\u5173\u8054\u7684\u610F\u8BC6\u3002\u8BB8\u591A\u5B66\u751F\u4E5F\u8BB8\u5BF9\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u7684\u57FA\u672C\u539F\u7406\u548C\u6982\u5FF5\u5F88\u4E86\u89E3\uFF0C\u4F46\u5728\u7A0B\u5E8F\u8BBE\u8BA1\u548C\u8C03\u8BD5\u5DE5\u4F5C\u4E2D\uFF0C\u5F80\u5F80\u4E0D\u4F1A\u8FD0\u7528\u6240\u5B66\u77E5\u8BC6\u89E3\u51B3\u5B9E\u9645\u95EE\u9898\uFF0C\u4E0D\u4F1A\u628A\u9AD8\u7EA7\u8BED\u8A00\u4E2D\u7684\u7C7B\u578B\u5B9A\u4E49\u3001\u6570\u503C\u8303\u56F4\u3001\u6570\u636E\u7C7B\u578B\u8F6C\u6362\u7B49\u95EE\u9898\u548C\u672C\u8BFE\u7A0B\u6240\u5B66\u7684\u77E5\u8BC6\u8054\u7CFB\u8D77\u6765\uFF0C\u56E0\u800C\uFF0C\u6240\u5B66\u77E5\u8BC6\u6CA1\u6709\u8D77\u5230\u771F\u6B63\u7684\u4F5C\u7528\u3002'], ['\u5BF9\u4E8E\u672C\u7AE0\u5185\u5BB9\uFF0C\u6559\u5B66\u8FC7\u7A0B\u4E2D\u666E\u904D\u5B58\u5728\u7684\u95EE\u9898\u662F\uFF0C\u5B66\u751F\u7F3A\u4E4F\u5C06\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u548C\u7A0B\u5E8F\u8BBE\u8BA1\u53CA\u7A0B\u5E8F\u8C03\u8BD5\u5DE5\u4F5C\u76F8\u4E92\u5173\u8054\u7684\u610F\u8BC6\u3002\u8BB8\u591A\u5B66\u751F\u4E5F\u8BB8\u5BF9\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u7684\u57FA\u672C\u539F\u7406\u548C\u6982\u5FF5\u5F88\u4E86\u89E3\uFF0C\u4F46\u5728\u7A0B\u5E8F\u8BBE\u8BA1\u548C\u8C03\u8BD5\u5DE5\u4F5C\u4E2D\uFF0C\u5F80\u5F80\u4E0D\u4F1A\u8FD0\u7528\u6240\u5B66\u77E5\u8BC6\u89E3\u51B3\u5B9E\u9645\u95EE\u9898\uFF0C\u4E0D\u4F1A\u628A\u9AD8\u7EA7\u8BED\u8A00\u4E2D\u7684\u7C7B\u578B\u5B9A\u4E49\u3001\u6570\u503C\u8303\u56F4\u3001\u6570\u636E\u7C7B\u578B\u8F6C\u6362\u7B49\u95EE\u9898\u548C\u672C\u8BFE\u7A0B\u6240\u5B66\u7684\u77E5\u8BC6\u8054\u7CFB\u8D77\u6765\uFF0C\u56E0\u800C\uFF0C\u6240\u5B66\u77E5\u8BC6\u6CA1\u6709\u8D77\u5230\u771F\u6B63\u7684\u4F5C\u7528\u3002']),
+    _templateObject33 = _taggedTemplateLiteral(['\u4E3A\u4E86\u589E\u5F3A\u5B66\u751F\u5BF9\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u7684\u8BA4\u8BC6\uFF0C\u53EF\u4EE5\u8BA9\u5B66\u751F\u4EB2\u81EA\u7F16\u5199\u76F8\u5173\u7684\u7A0B\u5E8F\uFF0C\u901A\u8FC7\u7A0B\u5E8F\u7684\u6267\u884C\u7ED3\u679C\u6765\u7406\u89E3\u672C\u7AE0\u6240\u5B66\u7684\u77E5\u8BC6\u3002\u4E0E\u672C\u7AE0\u5185\u5BB9\u76F8\u5173\u7684\u7F16\u7A0B\u7EC3\u4E60\u6709\u5F88\u591A\uFF0C\u4F8B\u5982\uFF0C\u9A8C\u8BC1\u4E00\u4E9B\u5173\u7CFB\u8868\u8FBE\u5F0F\u7684\u7ED3\u679C\uFF1B\u786E\u5B9A float \u578B\u53D8\u91CF\u548C double \u578B\u53D8\u91CF\u7684\u7CBE\u5EA6\uFF1B\u68C0\u67E5\u4E00\u4E9B\u7279\u6B8A\u8868\u8FBE\u5F0F\u7684\u8FD0\u884C\u7ED3\u679C\uFF0C\u5982\u4E00\u4E2A\u975E\u96F6\u6574\u6570\u9664\u4EE5 0\u3001\u4E00\u4E2A\u975E\u96F6\u5B9E\u6570\u9664\u4EE5 0\u30010 \u9664\u4EE5 0\u3001\u8D1F\u6570\u5F00\u5E73\u65B9\u7B49\uFF1B\u68C0\u67E5\u673A\u5668\u662F\u5927\u7AEF\u8FD8\u662F\u5C0F\u7AEF\u65B9\u5F0F\u6570\u636E\uFF1B\u68C0\u67E5\u6570\u636E\u662F\u5BF9\u9F50\u5B58\u653E\u8FD8\u662F\u4E0D\u5BF9\u9F50\u5B58\u653E\u3002'], ['\u4E3A\u4E86\u589E\u5F3A\u5B66\u751F\u5BF9\u673A\u5668\u7EA7\u6570\u636E\u8868\u793A\u7684\u8BA4\u8BC6\uFF0C\u53EF\u4EE5\u8BA9\u5B66\u751F\u4EB2\u81EA\u7F16\u5199\u76F8\u5173\u7684\u7A0B\u5E8F\uFF0C\u901A\u8FC7\u7A0B\u5E8F\u7684\u6267\u884C\u7ED3\u679C\u6765\u7406\u89E3\u672C\u7AE0\u6240\u5B66\u7684\u77E5\u8BC6\u3002\u4E0E\u672C\u7AE0\u5185\u5BB9\u76F8\u5173\u7684\u7F16\u7A0B\u7EC3\u4E60\u6709\u5F88\u591A\uFF0C\u4F8B\u5982\uFF0C\u9A8C\u8BC1\u4E00\u4E9B\u5173\u7CFB\u8868\u8FBE\u5F0F\u7684\u7ED3\u679C\uFF1B\u786E\u5B9A float \u578B\u53D8\u91CF\u548C double \u578B\u53D8\u91CF\u7684\u7CBE\u5EA6\uFF1B\u68C0\u67E5\u4E00\u4E9B\u7279\u6B8A\u8868\u8FBE\u5F0F\u7684\u8FD0\u884C\u7ED3\u679C\uFF0C\u5982\u4E00\u4E2A\u975E\u96F6\u6574\u6570\u9664\u4EE5 0\u3001\u4E00\u4E2A\u975E\u96F6\u5B9E\u6570\u9664\u4EE5 0\u30010 \u9664\u4EE5 0\u3001\u8D1F\u6570\u5F00\u5E73\u65B9\u7B49\uFF1B\u68C0\u67E5\u673A\u5668\u662F\u5927\u7AEF\u8FD8\u662F\u5C0F\u7AEF\u65B9\u5F0F\u6570\u636E\uFF1B\u68C0\u67E5\u6570\u636E\u662F\u5BF9\u9F50\u5B58\u653E\u8FD8\u662F\u4E0D\u5BF9\u9F50\u5B58\u653E\u3002']);
+
+var _write = __webpack_require__(/*! @src/components/@write */ "./src/components/@write/index.ts");
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var title = '2.1　教学目标和内容安排';
+var page = (0, _write.section)(title)((0, _write.p)(_templateObject, (0, _write.b)(_templateObject2)), (0, _write.p)(_templateObject3, (0, _write.b)(_templateObject4)), (0, _write.ol)((0, _write.p)(_templateObject5), (0, _write.p)(_templateObject6), (0, _write.p)(_templateObject7), (0, _write.p)(_templateObject8), (0, _write.p)(_templateObject9), (0, _write.p)(_templateObject10), (0, _write.p)(_templateObject11), (0, _write.p)(_templateObject12), (0, _write.p)(_templateObject13), (0, _write.p)(_templateObject14), (0, _write.p)(_templateObject15), (0, _write.p)(_templateObject16), (0, _write.p)(_templateObject17), (0, _write.p)(_templateObject18), (0, _write.p)(_templateObject19), (0, _write.p)(_templateObject20), (0, _write.p)(_templateObject21), (0, _write.p)(_templateObject22), (0, _write.p)(_templateObject23), (0, _write.p)(_templateObject24), (0, _write.p)(_templateObject25), (0, _write.p)(_templateObject26), (0, _write.p)(_templateObject27), (0, _write.p)(_templateObject28), (0, _write.p)(_templateObject29), (0, _write.p)(_templateObject30)), (0, _write.p)(_templateObject31), (0, _write.p)(_templateObject32), (0, _write.p)(_templateObject33)).elem;
+
+window.outer.views['/ComputerOrganization/Chapter2/1'] = { page: page, title: title };console.log(title);
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vd2VicGFjay9ib290c3RyYXAiLCJ3ZWJwYWNrOi8vLy4vc3JjL3BhZ2VzL0NvbXB1dGVyT3JnYW5pemF0aW9uL0NoYXB0ZXIyLzEucGFnZS50cyJdLCJuYW1lcyI6WyJ0aXRsZSIsInBhZ2UiLCJwIiwiYiIsImVsZW0iLCJ3aW5kb3ciLCJvdXRlciIsInZpZXdzIiwiY29uc29sZSIsImxvZyJdLCJtYXBwaW5ncyI6IjtRQUFBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0EsUUFBUSxvQkFBb0I7UUFDNUI7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBOztRQUVBO1FBQ0E7UUFDQTs7UUFFQTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQSxpQkFBaUIsNEJBQTRCO1FBQzdDO1FBQ0E7UUFDQSxrQkFBa0IsMkJBQTJCO1FBQzdDO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7O1FBRUE7UUFDQTs7UUFFQTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTs7UUFFQTs7UUFFQTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBOztRQUVBO1FBQ0E7O1FBRUE7UUFDQTs7UUFFQTtRQUNBO1FBQ0E7OztRQUdBO1FBQ0E7O1FBRUE7UUFDQTs7UUFFQTtRQUNBO1FBQ0E7UUFDQSwwQ0FBMEMsZ0NBQWdDO1FBQzFFO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0Esd0RBQXdELGtCQUFrQjtRQUMxRTtRQUNBLGlEQUFpRCxjQUFjO1FBQy9EOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQSx5Q0FBeUMsaUNBQWlDO1FBQzFFLGdIQUFnSCxtQkFBbUIsRUFBRTtRQUNySTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBLDJCQUEyQiwwQkFBMEIsRUFBRTtRQUN2RCxpQ0FBaUMsZUFBZTtRQUNoRDtRQUNBO1FBQ0E7O1FBRUE7UUFDQSxzREFBc0QsK0RBQStEOztRQUVySDtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0EsZ0JBQWdCLHVCQUF1QjtRQUN2Qzs7O1FBR0E7UUFDQTtRQUNBO1FBQ0E7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUN2SkE7Ozs7QUFDQSxJQUFNQSxRQUFRLGVBQWQ7QUFDQSxJQUFNQyxPQUFPLG9CQUFRRCxLQUFSLE1BQWVFLFFBQWYsdUJBQW9CQyxRQUFwQiwwQkFBa0dELFFBQWxHLHdCQUF1R0MsUUFBdkcsc0JBQXFILG1CQUFHRCxRQUFILHlCQUFxQkEsUUFBckIseUJBQTRDQSxRQUE1Qyx5QkFBK0RBLFFBQS9ELHlCQUEyRkEsUUFBM0YseUJBQXdIQSxRQUF4SCwwQkFBNEpBLFFBQTVKLDBCQUErTEEsUUFBL0wsMEJBQTBOQSxRQUExTiwwQkFBb1FBLFFBQXBRLDBCQUEwU0EsUUFBMVMsMEJBQTJVQSxRQUEzVSwwQkFBZ1lBLFFBQWhZLDBCQUE2YUEsUUFBN2EsMEJBQTJjQSxRQUEzYywwQkFBNmVBLFFBQTdlLDBCQUEwZ0JBLFFBQTFnQiwwQkFBb2tCQSxRQUFwa0IsMEJBQXltQkEsUUFBem1CLDBCQUF1cEJBLFFBQXZwQiwwQkFBNnNCQSxRQUE3c0IsMEJBQXF2QkEsUUFBcnZCLDBCQUEyeEJBLFFBQTN4QiwwQkFBbzBCQSxRQUFwMEIsMEJBQXkxQkEsUUFBejFCLDBCQUFpNEJBLFFBQWo0QixxQkFBckgsTUFBK2dDQSxRQUEvZ0MsMEJBQTJ2Q0EsUUFBM3ZDLDBCQUF5NkNBLFFBQXo2QyxzQkFBcW5ERSxJQUFsb0Q7O0FBRU1DLE9BQU9DLEtBQVAsQ0FBYUMsS0FBYixDQUFtQixrQ0FBbkIsSUFBdUQsRUFBQ04sVUFBRCxFQUFNRCxZQUFOLEVBQXZELENBQW9FUSxRQUFRQyxHQUFSLENBQVlULEtBQVosRSIsImZpbGUiOiJDb21wdXRlck9yZ2FuaXphdGlvbi9DaGFwdGVyMi8xLmpzIiwic291cmNlc0NvbnRlbnQiOlsiIFx0Ly8gaW5zdGFsbCBhIEpTT05QIGNhbGxiYWNrIGZvciBjaHVuayBsb2FkaW5nXG4gXHRmdW5jdGlvbiB3ZWJwYWNrSnNvbnBDYWxsYmFjayhkYXRhKSB7XG4gXHRcdHZhciBjaHVua0lkcyA9IGRhdGFbMF07XG4gXHRcdHZhciBtb3JlTW9kdWxlcyA9IGRhdGFbMV07XG4gXHRcdHZhciBleGVjdXRlTW9kdWxlcyA9IGRhdGFbMl07XG5cbiBcdFx0Ly8gYWRkIFwibW9yZU1vZHVsZXNcIiB0byB0aGUgbW9kdWxlcyBvYmplY3QsXG4gXHRcdC8vIHRoZW4gZmxhZyBhbGwgXCJjaHVua0lkc1wiIGFzIGxvYWRlZCBhbmQgZmlyZSBjYWxsYmFja1xuIFx0XHR2YXIgbW9kdWxlSWQsIGNodW5rSWQsIGkgPSAwLCByZXNvbHZlcyA9IFtdO1xuIFx0XHRmb3IoO2kgPCBjaHVua0lkcy5sZW5ndGg7IGkrKykge1xuIFx0XHRcdGNodW5rSWQgPSBjaHVua0lkc1tpXTtcbiBcdFx0XHRpZihPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwoaW5zdGFsbGVkQ2h1bmtzLCBjaHVua0lkKSAmJiBpbnN0YWxsZWRDaHVua3NbY2h1bmtJZF0pIHtcbiBcdFx0XHRcdHJlc29sdmVzLnB1c2goaW5zdGFsbGVkQ2h1bmtzW2NodW5rSWRdWzBdKTtcbiBcdFx0XHR9XG4gXHRcdFx0aW5zdGFsbGVkQ2h1bmtzW2NodW5rSWRdID0gMDtcbiBcdFx0fVxuIFx0XHRmb3IobW9kdWxlSWQgaW4gbW9yZU1vZHVsZXMpIHtcbiBcdFx0XHRpZihPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwobW9yZU1vZHVsZXMsIG1vZHVsZUlkKSkge1xuIFx0XHRcdFx0bW9kdWxlc1ttb2R1bGVJZF0gPSBtb3JlTW9kdWxlc1ttb2R1bGVJZF07XG4gXHRcdFx0fVxuIFx0XHR9XG4gXHRcdGlmKHBhcmVudEpzb25wRnVuY3Rpb24pIHBhcmVudEpzb25wRnVuY3Rpb24oZGF0YSk7XG5cbiBcdFx0d2hpbGUocmVzb2x2ZXMubGVuZ3RoKSB7XG4gXHRcdFx0cmVzb2x2ZXMuc2hpZnQoKSgpO1xuIFx0XHR9XG5cbiBcdFx0Ly8gYWRkIGVudHJ5IG1vZHVsZXMgZnJvbSBsb2FkZWQgY2h1bmsgdG8gZGVmZXJyZWQgbGlzdFxuIFx0XHRkZWZlcnJlZE1vZHVsZXMucHVzaC5hcHBseShkZWZlcnJlZE1vZHVsZXMsIGV4ZWN1dGVNb2R1bGVzIHx8IFtdKTtcblxuIFx0XHQvLyBydW4gZGVmZXJyZWQgbW9kdWxlcyB3aGVuIGFsbCBjaHVua3MgcmVhZHlcbiBcdFx0cmV0dXJuIGNoZWNrRGVmZXJyZWRNb2R1bGVzKCk7XG4gXHR9O1xuIFx0ZnVuY3Rpb24gY2hlY2tEZWZlcnJlZE1vZHVsZXMoKSB7XG4gXHRcdHZhciByZXN1bHQ7XG4gXHRcdGZvcih2YXIgaSA9IDA7IGkgPCBkZWZlcnJlZE1vZHVsZXMubGVuZ3RoOyBpKyspIHtcbiBcdFx0XHR2YXIgZGVmZXJyZWRNb2R1bGUgPSBkZWZlcnJlZE1vZHVsZXNbaV07XG4gXHRcdFx0dmFyIGZ1bGZpbGxlZCA9IHRydWU7XG4gXHRcdFx0Zm9yKHZhciBqID0gMTsgaiA8IGRlZmVycmVkTW9kdWxlLmxlbmd0aDsgaisrKSB7XG4gXHRcdFx0XHR2YXIgZGVwSWQgPSBkZWZlcnJlZE1vZHVsZVtqXTtcbiBcdFx0XHRcdGlmKGluc3RhbGxlZENodW5rc1tkZXBJZF0gIT09IDApIGZ1bGZpbGxlZCA9IGZhbHNlO1xuIFx0XHRcdH1cbiBcdFx0XHRpZihmdWxmaWxsZWQpIHtcbiBcdFx0XHRcdGRlZmVycmVkTW9kdWxlcy5zcGxpY2UoaS0tLCAxKTtcbiBcdFx0XHRcdHJlc3VsdCA9IF9fd2VicGFja19yZXF1aXJlX18oX193ZWJwYWNrX3JlcXVpcmVfXy5zID0gZGVmZXJyZWRNb2R1bGVbMF0pO1xuIFx0XHRcdH1cbiBcdFx0fVxuXG4gXHRcdHJldHVybiByZXN1bHQ7XG4gXHR9XG5cbiBcdC8vIFRoZSBtb2R1bGUgY2FjaGVcbiBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0ge307XG5cbiBcdC8vIG9iamVjdCB0byBzdG9yZSBsb2FkZWQgYW5kIGxvYWRpbmcgY2h1bmtzXG4gXHQvLyB1bmRlZmluZWQgPSBjaHVuayBub3QgbG9hZGVkLCBudWxsID0gY2h1bmsgcHJlbG9hZGVkL3ByZWZldGNoZWRcbiBcdC8vIFByb21pc2UgPSBjaHVuayBsb2FkaW5nLCAwID0gY2h1bmsgbG9hZGVkXG4gXHR2YXIgaW5zdGFsbGVkQ2h1bmtzID0ge1xuIFx0XHRcIkNvbXB1dGVyT3JnYW5pemF0aW9uL0NoYXB0ZXIyLzFcIjogMFxuIFx0fTtcblxuIFx0dmFyIGRlZmVycmVkTW9kdWxlcyA9IFtdO1xuXG4gXHQvLyBUaGUgcmVxdWlyZSBmdW5jdGlvblxuIFx0ZnVuY3Rpb24gX193ZWJwYWNrX3JlcXVpcmVfXyhtb2R1bGVJZCkge1xuXG4gXHRcdC8vIENoZWNrIGlmIG1vZHVsZSBpcyBpbiBjYWNoZVxuIFx0XHRpZihpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSkge1xuIFx0XHRcdHJldHVybiBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXS5leHBvcnRzO1xuIFx0XHR9XG4gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4gXHRcdHZhciBtb2R1bGUgPSBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSA9IHtcbiBcdFx0XHRpOiBtb2R1bGVJZCxcbiBcdFx0XHRsOiBmYWxzZSxcbiBcdFx0XHRleHBvcnRzOiB7fVxuIFx0XHR9O1xuXG4gXHRcdC8vIEV4ZWN1dGUgdGhlIG1vZHVsZSBmdW5jdGlvblxuIFx0XHRtb2R1bGVzW21vZHVsZUlkXS5jYWxsKG1vZHVsZS5leHBvcnRzLCBtb2R1bGUsIG1vZHVsZS5leHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKTtcblxuIFx0XHQvLyBGbGFnIHRoZSBtb2R1bGUgYXMgbG9hZGVkXG4gXHRcdG1vZHVsZS5sID0gdHJ1ZTtcblxuIFx0XHQvLyBSZXR1cm4gdGhlIGV4cG9ydHMgb2YgdGhlIG1vZHVsZVxuIFx0XHRyZXR1cm4gbW9kdWxlLmV4cG9ydHM7XG4gXHR9XG5cblxuIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGVzIG9iamVjdCAoX193ZWJwYWNrX21vZHVsZXNfXylcbiBcdF9fd2VicGFja19yZXF1aXJlX18ubSA9IG1vZHVsZXM7XG5cbiBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlIGNhY2hlXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmMgPSBpbnN0YWxsZWRNb2R1bGVzO1xuXG4gXHQvLyBkZWZpbmUgZ2V0dGVyIGZ1bmN0aW9uIGZvciBoYXJtb255IGV4cG9ydHNcbiBcdF9fd2VicGFja19yZXF1aXJlX18uZCA9IGZ1bmN0aW9uKGV4cG9ydHMsIG5hbWUsIGdldHRlcikge1xuIFx0XHRpZighX193ZWJwYWNrX3JlcXVpcmVfXy5vKGV4cG9ydHMsIG5hbWUpKSB7XG4gXHRcdFx0T2JqZWN0LmRlZmluZVByb3BlcnR5KGV4cG9ydHMsIG5hbWUsIHsgZW51bWVyYWJsZTogdHJ1ZSwgZ2V0OiBnZXR0ZXIgfSk7XG4gXHRcdH1cbiBcdH07XG5cbiBcdC8vIGRlZmluZSBfX2VzTW9kdWxlIG9uIGV4cG9ydHNcbiBcdF9fd2VicGFja19yZXF1aXJlX18uciA9IGZ1bmN0aW9uKGV4cG9ydHMpIHtcbiBcdFx0aWYodHlwZW9mIFN5bWJvbCAhPT0gJ3VuZGVmaW5lZCcgJiYgU3ltYm9sLnRvU3RyaW5nVGFnKSB7XG4gXHRcdFx0T2JqZWN0LmRlZmluZVByb3BlcnR5KGV4cG9ydHMsIFN5bWJvbC50b1N0cmluZ1RhZywgeyB2YWx1ZTogJ01vZHVsZScgfSk7XG4gXHRcdH1cbiBcdFx0T2JqZWN0LmRlZmluZVByb3BlcnR5KGV4cG9ydHMsICdfX2VzTW9kdWxlJywgeyB2YWx1ZTogdHJ1ZSB9KTtcbiBcdH07XG5cbiBcdC8vIGNyZWF0ZSBhIGZha2UgbmFtZXNwYWNlIG9iamVjdFxuIFx0Ly8gbW9kZSAmIDE6IHZhbHVlIGlzIGEgbW9kdWxlIGlkLCByZXF1aXJlIGl0XG4gXHQvLyBtb2RlICYgMjogbWVyZ2UgYWxsIHByb3BlcnRpZXMgb2YgdmFsdWUgaW50byB0aGUgbnNcbiBcdC8vIG1vZGUgJiA0OiByZXR1cm4gdmFsdWUgd2hlbiBhbHJlYWR5IG5zIG9iamVjdFxuIFx0Ly8gbW9kZSAmIDh8MTogYmVoYXZlIGxpa2UgcmVxdWlyZVxuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy50ID0gZnVuY3Rpb24odmFsdWUsIG1vZGUpIHtcbiBcdFx0aWYobW9kZSAmIDEpIHZhbHVlID0gX193ZWJwYWNrX3JlcXVpcmVfXyh2YWx1ZSk7XG4gXHRcdGlmKG1vZGUgJiA4KSByZXR1cm4gdmFsdWU7XG4gXHRcdGlmKChtb2RlICYgNCkgJiYgdHlwZW9mIHZhbHVlID09PSAnb2JqZWN0JyAmJiB2YWx1ZSAmJiB2YWx1ZS5fX2VzTW9kdWxlKSByZXR1cm4gdmFsdWU7XG4gXHRcdHZhciBucyA9IE9iamVjdC5jcmVhdGUobnVsbCk7XG4gXHRcdF9fd2VicGFja19yZXF1aXJlX18ucihucyk7XG4gXHRcdE9iamVjdC5kZWZpbmVQcm9wZXJ0eShucywgJ2RlZmF1bHQnLCB7IGVudW1lcmFibGU6IHRydWUsIHZhbHVlOiB2YWx1ZSB9KTtcbiBcdFx0aWYobW9kZSAmIDIgJiYgdHlwZW9mIHZhbHVlICE9ICdzdHJpbmcnKSBmb3IodmFyIGtleSBpbiB2YWx1ZSkgX193ZWJwYWNrX3JlcXVpcmVfXy5kKG5zLCBrZXksIGZ1bmN0aW9uKGtleSkgeyByZXR1cm4gdmFsdWVba2V5XTsgfS5iaW5kKG51bGwsIGtleSkpO1xuIFx0XHRyZXR1cm4gbnM7XG4gXHR9O1xuXG4gXHQvLyBnZXREZWZhdWx0RXhwb3J0IGZ1bmN0aW9uIGZvciBjb21wYXRpYmlsaXR5IHdpdGggbm9uLWhhcm1vbnkgbW9kdWxlc1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5uID0gZnVuY3Rpb24obW9kdWxlKSB7XG4gXHRcdHZhciBnZXR0ZXIgPSBtb2R1bGUgJiYgbW9kdWxlLl9fZXNNb2R1bGUgP1xuIFx0XHRcdGZ1bmN0aW9uIGdldERlZmF1bHQoKSB7IHJldHVybiBtb2R1bGVbJ2RlZmF1bHQnXTsgfSA6XG4gXHRcdFx0ZnVuY3Rpb24gZ2V0TW9kdWxlRXhwb3J0cygpIHsgcmV0dXJuIG1vZHVsZTsgfTtcbiBcdFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kKGdldHRlciwgJ2EnLCBnZXR0ZXIpO1xuIFx0XHRyZXR1cm4gZ2V0dGVyO1xuIFx0fTtcblxuIFx0Ly8gT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm8gPSBmdW5jdGlvbihvYmplY3QsIHByb3BlcnR5KSB7IHJldHVybiBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqZWN0LCBwcm9wZXJ0eSk7IH07XG5cbiBcdC8vIF9fd2VicGFja19wdWJsaWNfcGF0aF9fXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnAgPSBcIlwiO1xuXG4gXHR2YXIganNvbnBBcnJheSA9IHdpbmRvd1tcIndlYnBhY2tKc29ucFwiXSA9IHdpbmRvd1tcIndlYnBhY2tKc29ucFwiXSB8fCBbXTtcbiBcdHZhciBvbGRKc29ucEZ1bmN0aW9uID0ganNvbnBBcnJheS5wdXNoLmJpbmQoanNvbnBBcnJheSk7XG4gXHRqc29ucEFycmF5LnB1c2ggPSB3ZWJwYWNrSnNvbnBDYWxsYmFjaztcbiBcdGpzb25wQXJyYXkgPSBqc29ucEFycmF5LnNsaWNlKCk7XG4gXHRmb3IodmFyIGkgPSAwOyBpIDwganNvbnBBcnJheS5sZW5ndGg7IGkrKykgd2VicGFja0pzb25wQ2FsbGJhY2soanNvbnBBcnJheVtpXSk7XG4gXHR2YXIgcGFyZW50SnNvbnBGdW5jdGlvbiA9IG9sZEpzb25wRnVuY3Rpb247XG5cblxuIFx0Ly8gYWRkIGVudHJ5IG1vZHVsZSB0byBkZWZlcnJlZCBsaXN0XG4gXHRkZWZlcnJlZE1vZHVsZXMucHVzaChbXCIuL3NyYy9wYWdlcy9Db21wdXRlck9yZ2FuaXphdGlvbi9DaGFwdGVyMi8xLnBhZ2UudHNcIixcInZlbmRvcnNcIixcImNvbW1vblwiXSk7XG4gXHQvLyBydW4gZGVmZXJyZWQgbW9kdWxlcyB3aGVuIHJlYWR5XG4gXHRyZXR1cm4gY2hlY2tEZWZlcnJlZE1vZHVsZXMoKTtcbiIsImltcG9ydCB7IGIsIG9sLCBwLCBzZWN0aW9uIH0gZnJvbSAnQHNyYy9jb21wb25lbnRzL0B3cml0ZSc7XG5jb25zdCB0aXRsZSA9ICcyLjHjgIDmlZnlrabnm67moIflkozlhoXlrrnlronmjpInO1xuY29uc3QgcGFnZSA9IHNlY3Rpb24odGl0bGUpKHAgYCR7YiBg5Li76KaB5pWZ5a2m55uu5qCHYH3kvb/lrabnlJ/mjozmj6HorqHnrpfmnLrlhoXpg6jlkITnp43mlbDmja7nmoTmnLrlmajnuqfooajnpLrku6Xlj4rnm7jlupTnmoTlkITnp43ov5Dnrpfmlrnms5XvvIzlubbog73lsIbov5nkupvnn6Xor4bnhp/nu4Pov5DnlKjliLDpq5jnuqfor63oqIDlkozmnLrlmajnuqfor63oqIDnmoTnvJbnqIvlkozosIPor5Xlt6XkvZzkuK3jgIJgLCBwIGAke2IgYOWfuuacrOWtpuS5oOimgeaxgmB9YCwgb2wocCBg5LqG6Kej55yf5YC85ZKM5py65Zmo5pWw55qE5ZCr5LmJ44CCYCwgcCBg5LqG6Kej5peg56ym5Y+35pW05pWw55qE5ZCr5LmJ44CB55So6YCU5ZKM6KGo56S644CCYCwgcCBg5LqG6Kej5bim56ym5Y+35pW05pWw55qE6KGo56S65pa55rOV44CCYCwgcCBg55CG6Kej5Li65LuA5LmI546w5Luj6K6h566X5py66YO955So6KGl56CB6KGo56S65bim56ym5Y+35pW05pWw44CCYCwgcCBg5o6M5o+h5Zyo55yf5YC85ZKM5ZCE56eN57yW56CB6KGo56S65pWw5LmL6Ze06L+b6KGM6L2s5o2i55qE5pa55rOV44CCYCwgcCBg6IO95aSf6L+Q55So5pW05pWw6KGo56S655+l6K+G6Kej6YeK5ZKM6Kej5Yaz6auY57qn57yW56iL5Lit5pW05pWw6KGo56S65ZKM6L2s5o2i6Zeu6aKY44CCYCwgcCBg5LqG6Kej5rWu54K55pWw6KGo56S65qC85byP77yM5Lul5Y+K5YW25LiO6KGo56S657K+5bqm5ZKM6KGo56S66IyD5Zu05LmL6Ze055qE5YWz57O744CCYCwgcCBg5o6M5o+h6KeE5qC85YyW5rWu54K55pWw55qE5qaC5b+15ZKM5rWu54K55pWw6KeE5qC85YyW5pa55rOV44CCYCwgcCBg5o6M5o+hIElFRUUgNzU0IOagh+WHhu+8jOW5tuiDveWcqOecn+WAvOS4juWNleeyvuW6puagvOW8j+a1rueCueaVsOS5i+mXtOi/m+ihjOi9rOaNouOAgmAsIHAgYOiDvei/kOeUqOaVsOaNruihqOekuuefpeivhuino+mHiuWSjOino+WGs+mrmOe6p+ivreiogOe8lueoi+S4rea1rueCueaVsOihqOekuuWSjOi9rOaNoumXrumimOOAgmAsIHAgYOaOjOaPoeW4uOeUqOeahOWNgei/m+WItuaVsOeahOS6jOi/m+WItue8lueggeaWueazle+8jOWmgiA4NDIxIOeggeOAgmAsIHAgYOS6huino+mAu+i+keaVsOaNruOAgeilv+aWh+Wtl+espuWSjOaxieWtl+Wtl+espueahOW4uOeUqOihqOekuuaWueazle+8jOWmgiBBU0NJSSDnoIHjgIFHQiAyMzEy4oCUMTk4MOOAgmAsIHAgYOS6huino+W4uOeUqOaVsOaNrumVv+W6puWNleS9jeeahOWQq+S5ie+8jOWmgiBiaXTjgIFCeXRl44CBS0LjgIFNQuOAgUdC44CBVEIg562J44CCYCwgcCBg5LqG6Kej5aSn56uv5ZKM5bCP56uv5o6S5YiX5pa55byP77yM5Lul5Y+K5pWw5o2u55qE5a+56b2Q5a2Y5YKo5pa55byP44CCYCwgcCBg5LqG6Kej6auY57qn56iL5bqP6K6+6K6h6K+t6KiA5ZKM5L2O57qn56iL5bqP6K6+6K6h6K+t6KiA5Lit5raJ5Y+K55qE5ZCE56eN6L+Q566X44CCYCwgcCBg5o6M5o+h5a6a54K55pWw55qE6YC76L6R56e75L2N44CB566X5pyv56e75L2N5ZKM5omp5bGV5pON5L2c5pa55rOV44CCYCwgcCBg5o6M5o+h5pW05pWw5Yqg5YeP6L+Q566X5pa55rOV5Lul5Y+K6L+Q566X6YOo5Lu255qE57uT5p6E77yM5bm26IO95Yip55So5py65Zmo5YaF6YOo55qE5pW05pWw6L+Q566X55+l6K+G6Kej6YeK6auY57qn6K+t6KiA57yW56iL5Lit55u45bqU55qE6K6h566X57uT5p6c44CCYCwgcCBg55CG6Kej5Li65L2V5Zyo6L+Q566X5Lit5Lya5Y+R55Sf5rqi5Ye677yM5bm25o6M5o+h5Yik5pat5pW05pWw5Yqg5YeP6L+Q566X5rqi5Ye655qE5pa55rOV44CCYCwgcCBg55CG6Kej5py65Zmo5YaF6YOo5pW05pWw5LmY6L+Q566X55qE5Z+65pys5pa55rOV5Lul5Y+K5bim56ym5Y+35pW05pWw5LmY5ZKM5peg56ym5Y+35pW05pWw5LmY55qE5LmY56ev5LmL6Ze055qE5YWz57O744CCYCwgcCBg55CG6Kej5Li65LuA5LmI5pW05pWw5LmY6L+Q566X5Lya5Y+R55Sf5rqi5Ye677yM5bm26IO95aSf6K+05piO5Zyo6auY57qn6K+t6KiA5ZKM5py65Zmo57qn5Luj56CB5Lik5Liq5LiN5ZCM55qE5bGC6Z2i5aaC5L2V6L+b6KGM5rqi5Ye65Yik5pat44CCYCwgcCBg55CG6Kej5pW05pWw6Zmk6L+Q566X5Zyo5LuA5LmI5oOF5Ya15LiL5Y+R55Sf5rqi5Ye65Lul5Y+K5Li65L2V5Zyo5YW25LuW5oOF5Ya15LiL5LiN5Lya5Y+R55Sf5rqi5Ye644CCYCwgcCBg55CG6Kej5Zyo5LiA5Liq5Y+Y6YeP5LiO5LiA5Liq5bi46YeP55u45LmY5pe25aaC5L2V5bCG5LmY6L+Q566X6L2s5o2i5Li65Yqg5YeP5ZKM56e75L2N6L+Q566X44CCYCwgcCBg55CG6Kej5LiA5Liq5Y+Y6YeP6Zmk5Lul5LiA5LiqIDIg55qE5bmC5qyh5b2i5byP55qE5pW05pWw5pe25aaC5L2V55So5Yqg5YeP5ZKM56e75L2N6L+Q566X5a6e546w44CCYCwgcCBg5o6M5o+h5rWu54K55pWw5Yqg5YeP6L+Q566X6L+H56iL5ZKM5pa55rOV44CCYCwgcCBg55CG6KejIElFRUUgNzU0IOagh+WHhuWvuemZhOWKoOS9jeeahOa3u+WKoOS7peWPiuiIjeWFpeaooeW8j+etieaWuemdoueahOinhOWumuOAgmAsIHAgYOS6huino+a1rueCueaVsOS5mOazleWSjOmZpOazlei/kOeul+eahOWfuuacrOaAneaDs+OAgmApLCBwIGDmnKznq6DlhoXlrrnnm7jlr7nmr5TovoPlrrnmmJPvvIzlrabnlJ/kuZ/mr5TovoPnhp/mgonjgILlr7nkuo7kv6Hmga/nmoTkuozov5vliLbooajnpLrjgIHov5vkvY3orqHmlbDliLbnrYnnroDljZXlhoXlrrnvvIzlrozlhajlj6/ku6XorqnlrabnlJ/oh6rlrabjgILlpoLmnpzor77ml7bkuI3lhYXoo5XvvIzlr7nkuo7ljYHov5vliLbmlbDnmoTooajnpLrlkozmsYnlrZflrZfnrKbnvJbnoIHpg6jliIbvvIzkuZ/lj6/ku6Xlj6rnroDljZXku4vnu43lhbbmpoLopoHlhoXlrrnvvIznu4boioLpg6jliIbnlZnnu5nlrabnlJ/or77lkI7pmIXor7vjgILlhbPkuo7pq5jnuqfor63oqIDkuK3nmoTlkITnp43mlbDmja7nsbvlnovkuI7mnLrlmajnuqfmlbDmja7ooajnpLrkuYvpl7TnmoTlhbPns7vvvIzlupTor6XopoHmsYLlrabnlJ/mjozmj6HvvIzov5nlr7nkuo7mj5Dpq5jlrabnlJ/nqIvluo/orr7orqHlkozosIPor5Xog73lipvlj6/otbfliLDlvojlpKfnmoTkvZznlKjjgILlhbblrp7vvIzov5npg6jliIblhoXlrrnlvojnroDljZXvvIzlj6ropoHlnKjmlZnlrabov4fnqIvkuK3mj5DphpLlrabnlJ/lhbPms6jlubbov5vooYzkuIDkupvnvJbnqIvnu4PkuaDlsLHog73ovr7liLDnm67nmoTvvIzogIzkuJTnqIvluo/orr7orqHor77nqIvkuK3lpKflpJrkuZ/kvJrku4vnu43ov5npg6jliIblhoXlrrnjgIJgLCBwIGDlr7nkuo7mnKznq6DlhoXlrrnvvIzmlZnlrabov4fnqIvkuK3mma7pgY3lrZjlnKjnmoTpl67popjmmK/vvIzlrabnlJ/nvLrkuY/lsIbmnLrlmajnuqfmlbDmja7ooajnpLrlkoznqIvluo/orr7orqHlj4rnqIvluo/osIPor5Xlt6XkvZznm7jkupLlhbPogZTnmoTmhI/or4bjgILorrjlpJrlrabnlJ/kuZ/orrjlr7nmnLrlmajnuqfmlbDmja7ooajnpLrnmoTln7rmnKzljp/nkIblkozmpoLlv7Xlvojkuobop6PvvIzkvYblnKjnqIvluo/orr7orqHlkozosIPor5Xlt6XkvZzkuK3vvIzlvoDlvoDkuI3kvJrov5DnlKjmiYDlrabnn6Xor4bop6PlhrPlrp7pmYXpl67popjvvIzkuI3kvJrmiorpq5jnuqfor63oqIDkuK3nmoTnsbvlnovlrprkuYnjgIHmlbDlgLzojIPlm7TjgIHmlbDmja7nsbvlnovovazmjaLnrYnpl67popjlkozmnKzor77nqIvmiYDlrabnmoTnn6Xor4bogZTns7votbfmnaXvvIzlm6DogIzvvIzmiYDlrabnn6Xor4bmsqHmnInotbfliLDnnJ/mraPnmoTkvZznlKjjgIJgLCBwIGDkuLrkuoblop7lvLrlrabnlJ/lr7nmnLrlmajnuqfmlbDmja7ooajnpLrnmoTorqTor4bvvIzlj6/ku6XorqnlrabnlJ/kurLoh6rnvJblhpnnm7jlhbPnmoTnqIvluo/vvIzpgJrov4fnqIvluo/nmoTmiafooYznu5PmnpzmnaXnkIbop6PmnKznq6DmiYDlrabnmoTnn6Xor4bjgILkuI7mnKznq6DlhoXlrrnnm7jlhbPnmoTnvJbnqIvnu4PkuaDmnInlvojlpJrvvIzkvovlpoLvvIzpqozor4HkuIDkupvlhbPns7vooajovr7lvI/nmoTnu5PmnpzvvJvnoa7lrpogZmxvYXQg5Z6L5Y+Y6YeP5ZKMIGRvdWJsZSDlnovlj5jph4/nmoTnsr7luqbvvJvmo4Dmn6XkuIDkupvnibnmrorooajovr7lvI/nmoTov5DooYznu5PmnpzvvIzlpoLkuIDkuKrpnZ7pm7bmlbTmlbDpmaTku6UgMOOAgeS4gOS4qumdnumbtuWunuaVsOmZpOS7pSAw44CBMCDpmaTku6UgMOOAgei0n+aVsOW8gOW5s+aWueetie+8m+ajgOafpeacuuWZqOaYr+Wkp+err+i/mOaYr+Wwj+err+aWueW8j+aVsOaNru+8m+ajgOafpeaVsOaNruaYr+Wvuem9kOWtmOaUvui/mOaYr+S4jeWvuem9kOWtmOaUvuOAgmApLmVsZW07XG5cbiAgICAgIHdpbmRvdy5vdXRlci52aWV3c1snL0NvbXB1dGVyT3JnYW5pemF0aW9uL0NoYXB0ZXIyLzEnXT17cGFnZSx0aXRsZX07Y29uc29sZS5sb2codGl0bGUpIl0sInNvdXJjZVJvb3QiOiIifQ==
